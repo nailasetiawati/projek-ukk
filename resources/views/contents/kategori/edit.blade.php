@@ -2,7 +2,8 @@
 
 @section('contents')
 
-    <div class="container mt-5">
+    <div class="container mt-5">|
+      
       @foreach ($kategoris as $data)  
       <form action="/kategori/{{ $data->id }}/edit" method="POST">
         @csrf

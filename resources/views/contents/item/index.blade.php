@@ -29,17 +29,34 @@
             @foreach ($items as $data)     
             <tr>
               <th scope="row">{{ $loop->iteration  }}</th>
-              <td><img src="https://cdn1-production-images-kly.akamaized.net/IXwkGoxNo1fBdDms9BullOXvjLg=/1191x0:3681x3319/469x625/filters:quality(75):strip_icc():format(webp)/kly-media-production/medias/2952663/original/065258500_1572335694-2019-10-29.jpg" width="120px" height="120px"></td>
+              <td><img src="/img/item-image/{{ $data->image }}" width="120px" height="120px"></td>
               <td>{{ $data->name }}</td>
               <td>{{ $data->Kategori->name }}</td>
-              <td>Rp. {{ $data->price }}</td>
+              <td>Rp. {{ number_format($data->price,2,',','.') }}</td>
               <td>
-                  <a href="/item/edit">
-                      <button type="button" class="btn btn-warning">Edit</button>
-                  </a>
-                  <button type="button" class="btn btn-danger">Hapus</button>
+                 <a href="/item/{{ $data->id }}/edit" class="btn btn-primary">Edit</a>
+                  <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalDelete{{ $data->id }}">Hapus</button>
               </td>
             </tr>
+            <div class="modal fade" id="modalDelete{{ $data->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Perhatian!</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                          </button>
+                      </div>
+                      <div class="modal-body">
+                          Apakah anda yakin akan menghapus barang {{ $data->name }}?
+                      </div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Batal</button>
+                          <a href="/item/{{ $data->id }}/delete" class="btn btn-outline-danger">Yakin</a>
+                      </div>
+                  </div>
+              </div>
+          </div>
             @endforeach
         </tbody>
       </table>

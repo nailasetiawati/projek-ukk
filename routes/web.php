@@ -23,49 +23,10 @@ use App\Http\Controllers\KategoriController;
 |
 */
 
-//Auth
-Route::get('/login', [AuthController::class, 'index']);
-
-
-Route::get('/register', [AuthController::class, 'register']);
-
-Route::get('/register', function () {
-    return view('contents.auth.register');
-});
-
-//Home
-Route::get('/home', [HomeController::class, 'index']);
-
-//Fitur1
-Route::get('/fitur1', [Fitur1Controller::class, 'index']);
-
-//Fitur2
-Route::get('/fitur2', [Fitur2Controller::class, 'index']);
-
-//Fitur3
-Route::get('/fitur3', [Fitur3Controller::class, 'index']);
-
-//Fitur4
-Route::get('/fitur4', [Fitur4Controller::class, 'index']);
-
-//Fitur5
-Route::get('/fitur5', [Fitur5Controller::class, 'index']);
-
-//Fitur6
-Route::get('/fitur6', [Fitur6Controller::class, 'index']);
-
-Route::get('/kategori', function () {
-    return view('contents.kategori.index');
-});
-
-Route::get('/transaksi', function () {
-    return view('contents.transaksi.index');
-});
-
 //kategori
 Route::group([
     'namespace' => 'App',
-    'middleware'    => ['guest']
+    'middleware'    => ['auth']
 ], function(){
     Route::prefix('kategori')->group(function(){
        Route::get('/', [KategoriController::class, 'index']);
@@ -80,15 +41,30 @@ Route::group([
         Route::get('/', [ItemController::class, 'index']);
         Route::get('/tambah', [ItemController::class, 'tambah']);
         Route::post('/tambah', [ItemController::class, 'store']);
-        Route::get('/edit', [ItemController::class, 'edit']);
-        Route::post('/edit', [ItemController::class, 'update']);
+        Route::get('/{id}/edit', [ItemController::class, 'edit']);
+        Route::post('/{id}/update', [ItemController::class, 'update']);
+       Route::get('/{id}/delete', [ItemController::class, 'delete']);
     });
+
+    Route::prefix('home')->group(function(){
+        Route::get('/', [HomeController::class, 'index']);
+        Route::get('/{id}', [HomeController::class, 'category']);
+        Route::post('/getproduct', [HomeController::class, 'getproduct']);
+    });
+    Route::get('/logout', [AuthController::class, 'logout']);
 });
 
-//item
 
 
 
+
+Route::group([
+    'namespace' => 'App',
+    'middleware'    => ['guest']
+], function(){
+    Route::get('/', [AuthController::class, 'index'])->name('login');
+    Route::post('/', [AuthController::class, 'auth']);
+});
 
 
 

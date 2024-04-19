@@ -3,7 +3,7 @@
 @section('contents')
 
     <div class="container mt-5">
-        <form action="/item/tambah" method="POST">
+        <form action="/item/tambah" method="POST" enctype="multipart/form-data">
           @csrf
             <div class="form-group">
               <label for="exampleInputEmail1">Nama Barang</label>
@@ -37,18 +37,20 @@
                   </div>
                 @enderror
               <label for="exampleInputEmail1">Gambar</label>
-              <input type="file" class="form-control @error('image')
+              <input type="file" id="image" class="form-control @error('image')
                 is-invalid
-              @enderror" name="image">
+              @enderror" name="image" onchange="previewImage()">
               @error('image')
                   <div class="invalid-feedback">
                     {{ $message }}
                   </div>
                 @enderror
+                <img class="img-account-profile mt-3 mb-4 img-thumbnail img-preview"
+                            src="https://thumbs.dreamstime.com/b/no-image-vector-symbol-missing-available-icon-gallery-moment-placeholder-248879067.jpg" alt="" width="240px" height="520px">
+                        <div class="small font-italic text-muted mb-4">JPG atau PNG ukuran kurang dari 5 MB</div>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
             <a href="/item" type="submit" class="btn btn-danger">Cancel</a>
           </form>
     </div>
-    
 @endsection
