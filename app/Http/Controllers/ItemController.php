@@ -59,11 +59,11 @@ class ItemController extends Controller
 
     public function update(Request $request, $id)
     {
-        // dd($request);
         $validatedData = $request->validate([
             'name'          => 'required',
+            'kategori_id'   => 'required',
             'price'         => 'required',
-            'image'         =>  'image|file|max:5120',
+            'image'         =>  'nullable',
         ]);
 
         if($request->image != null){
@@ -81,12 +81,13 @@ class ItemController extends Controller
 
             Item::where('id', $id)->update($validatedData);
         }else{
-            $item = Item::where('id', $id)->update([
+            Item::where('id', $id)->update([
                 'kategori_id' => $validatedData['kategori_id'],
                 'name'        => $validatedData['name'],
                 'price'       => $validatedData['price'],
             ]);
         }
+            
 
 
         return redirect('/item')->with('Berhasil', 'Barang '.$request->name.' Berhasil diubah!');

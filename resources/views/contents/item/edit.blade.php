@@ -19,7 +19,7 @@
             @enderror
               <label for="exampleInputEmail1">Kategori Barang</label> 
               <select name="kategori_id" id="" class="form-control">
-                <option value="{{ $data->Kategori->id }} " selected disabled>{{ $data->Kategori->name }}</option>
+                <option value="{{ $data->Kategori->id }} " selected>{{ $data->Kategori->name }}</option>
                 @foreach ($kategori as $c)
                 <option value="{{ $c->id }}" >
                   {{ $c->name }}
